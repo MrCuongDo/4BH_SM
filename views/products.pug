@@ -1,71 +1,57 @@
 extends layout
 
 block content
-    h1= title
-    p Trang hiển thị danh sách tất cả Lego
 
-    //- h3 Tìm kiếm
-    //- form(action="") 
-    //-     .form-row 
-    //-         .col
-    //-             //- input#inputMaSanPham.form-control(type="text", placeholder="Mã sản phẩm" , value="")
-    //-             select#inputYear.form-control
-    //-                 - let now = new Date()
-    //-                 - let year = now.getFullYear()
-    //-                 - for(let i = 0; i < 10; i++)
-    //-                     - let temp = year - i
-    //-                     option(value= temp ) #{temp}
-            //- .col 
-            //-     input#inputTenSanPham.form-control(type="text", placeholder="tên sản phẩm", value="")
-            //- .col
-            //-     input#inputTheme.form-control(type="text", placeholder="Theme", value='')
-            //- .col
-            //-     input#inputPrice.form-control(type="text", placeholder="Giá", value='')
-            //- .col
-            //-     #themBtn.btn.btn-danger
-            //-         i.fal.fa-plus
+    main.col-md-9.ml-sm-auto.col-lg-10.px-md-4(role='main')
+        .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+            h1.h2 Danh sách Lego
+            .btn-toolbar.mb-2.mb-md-0
+                .btn-group.mr-2
+                    button.btn.btn-sm.btn-outline-secondary(type='button') Share
+                    button.btn.btn-sm.btn-outline-secondary(type='button') Export
+                button.btn.btn-sm.btn-outline-secondary.dropdown-toggle(type='button')
+                    span(data-feather='calendar')
+                    |         This week
+        .table-responsive
+            table#ds_legolist.table.table-hover.table-striped
+                thead 
+                    tr
+                        th  STT 
+                        th  Mã Sản Phẩm 
+                        th  Tên Sản Phẩm 
+                        th  Dòng 
+                        th  Năm
+                        th  Số miếng
+                        th  Giá
+                        th  Thao tác
+                tbody#table_body
                 
-    
-    h3 Danh sách Lego
-    table#ds_legolist.table.table-hover.table-striped.table-responsive
-        thead 
-            tr
-                th  STT 
-                th  Mã Sản Phẩm 
-                th  Tên Sản Phẩm 
-                th  Dòng 
-                th  Năm
-                th  Số miếng
-                th  Giá
-                th  Thao tác
-        tbody#table_body
-            
-    #editLegolistModal.modal.fade(tabindex='-1', aria-labelledby='editLegolistModal', aria-hidden='true')
-        .modal-dialog
-            .modal-content
-                .modal-header
-                    h5#exampleModalLabel.modal-title Modal title
-                    button.close(type='button', data-dismiss='modal', aria-label='Close')
-                    span(aria-hidden='true') &times;
-                .modal-body
+        #editLegolistModal.modal.fade(tabindex='-1', aria-labelledby='editLegolistModal', aria-hidden='true')
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h5#exampleModalLabel.modal-title Modal title
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') &times;
+                    .modal-body
+                        
+                        .form-row 
+                            input#inputIdEdit(type='hidden', value="")
+                            .form-group.col-md-4
+                                    input#inputMaSanPhamEdit.form-control(type="text", placeholder="Mã sản phẩm" , value="")
+                            .form-group.col-md-4
+                                input#inputThemeEdit.form-control(type="text", placeholder="Theme", value='')
+                            .form-group.col-md-4
+                                input#inputPriceEdit.form-control(type="text", placeholder="Giá", value='')
+                            //- .col
+                            //-     #editBtn.btn.btn-info
+                            //-         i.fad.fa-edit
+                        .form-group
+                            input#inputTenSanPhamEdit.form-control(type="text", placeholder="tên sản phẩm", value="")
                     
-                    .form-row 
-                        input#inputIdEdit(type='hidden', value="")
-                        .form-group.col-md-4
-                                input#inputMaSanPhamEdit.form-control(type="text", placeholder="Mã sản phẩm" , value="")
-                        .form-group.col-md-4
-                            input#inputThemeEdit.form-control(type="text", placeholder="Theme", value='')
-                        .form-group.col-md-4
-                            input#inputPriceEdit.form-control(type="text", placeholder="Giá", value='')
-                        //- .col
-                        //-     #editBtn.btn.btn-info
-                        //-         i.fad.fa-edit
-                    .form-group
-                        input#inputTenSanPhamEdit.form-control(type="text", placeholder="tên sản phẩm", value="")
-                
-                .modal-footer
-                    button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
-                    button#editBtn.btn.btn-primary(type='button') Lưu thay đổi
+                    .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
+                        button#editBtn.btn.btn-primary(type='button') Lưu thay đổi
 
     script(type="text/javascript").
 
