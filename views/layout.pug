@@ -2,12 +2,81 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', type='text/css', href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css')
-    link(rel='stylesheet', type='text/css', href='https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css')
+    //- link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/fontawesome-free-5-15-2/css/all.min.css')
+    link(rel='stylesheet', type='text/css', href='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.css')
+
+    link(rel='stylesheet', type='text/css', href='/stylesheets/dashboard.css')
 
     script(src="https://code.jquery.com/jquery-3.6.0.min.js") 
-    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js") 
-    script(src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js") 
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js") 
+    script(src="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.js") 
   body
-    block content
+    //- side wrapper
+    nav.navbar.navbar-dark.sticky-top.bg-dark.flex-md-nowrap.p-0.shadow
+      a.navbar-brand.col-md-3.col-lg-2.mr-0.px-3(href='#') shop4BHouse
+      button.navbar-toggler.position-absolute.d-md-none.collapsed(type='button', data-toggle='collapse', data-target='#sidebarMenu', aria-controls='sidebarMenu', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      input.form-control.form-control-dark.w-100(type='text', placeholder='Search', aria-label='Search')
+      ul.navbar-nav.px-3
+        li.nav-item.text-nowrap
+          a.nav-link(href='#') Sign out
+
+
+    nav#sidebarMenu.col-md-3.col-lg-2.d-md-block.bg-light.sidebar.collapse
+      .sidebar-sticky.pt-3
+        ul.nav.flex-column
+          li.nav-item
+            a.nav-link(href='/' , class = pageIndexActive ? 'active' : '')
+              i.fad.fa-home
+              |           Dashboard
+              span.sr-only (current)
+          li.nav-item
+            a.nav-link(href='#')
+              span(data-feather='file')
+              |           Orders (not yet)
+          li.nav-item
+            a.nav-link(href='/sanPham', class= pageProductsActive ? 'active' : '')
+              span(data-feather='shopping-cart')
+              |           Products 
+          li.nav-item
+            a.nav-link(href='#')
+              span(data-feather='users')
+              |           Customers (not yet)
+          li.nav-item
+            a.nav-link(href='#')
+              span(data-feather='bar-chart-2')
+              |           Reports (not yet)
+          li.nav-item
+            a.nav-link(href='#')
+              span(data-feather='layers')
+              |           Integrations (not yet)
+        h6.sidebar-heading.d-flex.justify-content-between.align-items-center.px-3.mt-4.mb-1.text-muted
+          span Saved reports
+          a.d-flex.align-items-center.text-muted(href='#', aria-label='Add a new report')
+            span(data-feather='plus-circle')
+        ul.nav.flex-column.mb-2
+          li.nav-item
+            a.nav-link(href='#')
+              span(data-feather='file-text')
+              |           Current month (not yet)
+          li.nav-item
+            a.nav-link(href='#')
+              span(data-feather='file-text')
+              |           Last quarter (not yet)
+          li.nav-item
+            a.nav-link(href='#')
+              span(data-feather='file-text')
+              |           Social engagement (not yet)
+          li.nav-item
+            a.nav-link(href='#')
+              span(data-feather='file-text')
+              |           Year-end sale (not yet)
+
+
+
+    //- contain wrapper. containts page content
+    //- block này chứa nội dung chính của các pages
+    .container
+      block content

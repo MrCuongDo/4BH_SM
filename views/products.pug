@@ -1,0 +1,180 @@
+extends layout
+
+block content
+    h1= title
+    p Trang hiển thị danh sách tất cả Lego
+
+    //- h3 Tìm kiếm
+    //- form(action="") 
+    //-     .form-row 
+    //-         .col
+    //-             //- input#inputMaSanPham.form-control(type="text", placeholder="Mã sản phẩm" , value="")
+    //-             select#inputYear.form-control
+    //-                 - let now = new Date()
+    //-                 - let year = now.getFullYear()
+    //-                 - for(let i = 0; i < 10; i++)
+    //-                     - let temp = year - i
+    //-                     option(value= temp ) #{temp}
+            //- .col 
+            //-     input#inputTenSanPham.form-control(type="text", placeholder="tên sản phẩm", value="")
+            //- .col
+            //-     input#inputTheme.form-control(type="text", placeholder="Theme", value='')
+            //- .col
+            //-     input#inputPrice.form-control(type="text", placeholder="Giá", value='')
+            //- .col
+            //-     #themBtn.btn.btn-danger
+            //-         i.fal.fa-plus
+                
+    
+    h3 Danh sách Lego
+    table#ds_legolist.table.table-hover.table-striped.table-responsive
+        thead 
+            tr
+                th  STT 
+                th  Mã Sản Phẩm 
+                th  Tên Sản Phẩm 
+                th  Dòng 
+                th  Năm
+                th  Số miếng
+                th  Giá
+                th  Thao tác
+        tbody#table_body
+            
+    #editLegolistModal.modal.fade(tabindex='-1', aria-labelledby='editLegolistModal', aria-hidden='true')
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    h5#exampleModalLabel.modal-title Modal title
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body
+                    
+                    .form-row 
+                        input#inputIdEdit(type='hidden', value="")
+                        .form-group.col-md-4
+                                input#inputMaSanPhamEdit.form-control(type="text", placeholder="Mã sản phẩm" , value="")
+                        .form-group.col-md-4
+                            input#inputThemeEdit.form-control(type="text", placeholder="Theme", value='')
+                        .form-group.col-md-4
+                            input#inputPriceEdit.form-control(type="text", placeholder="Giá", value='')
+                        //- .col
+                        //-     #editBtn.btn.btn-info
+                        //-         i.fad.fa-edit
+                    .form-group
+                        input#inputTenSanPhamEdit.form-control(type="text", placeholder="tên sản phẩm", value="")
+                
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Đóng
+                    button#editBtn.btn.btn-primary(type='button') Lưu thay đổi
+
+    script(type="text/javascript").
+
+        $(document).ready(function() {
+
+            $('#ds_legolist').DataTable({
+                processing: true,
+                ajax: {
+                    url: '/products/dsSanPham',
+                    type: 'POST',
+                    dataSrc: '',
+                },
+                columnDefs: [
+                    {'width': '10%', 'targets': 0},
+                    {'width': '15%', 'targets': 1},
+                    {'width': '35%', 'targets': 2},
+                    {'width': '15%', 'targets': 3},
+                    {'width': '5%', 'targets': 4},
+                    {'width': '5%', 'targets': 4},
+                    {'width': '5%', 'targets': 4},
+                    {'width': '10%', 'targets': 5},
+                ],
+                columns: [
+                    {'data': 'stt', 'orderable': false}, // tắt chức năng order cho cột STT},
+                    {'data': 'maSanPham'},
+                    {'data': 'tenSanPham'},
+                    {'data': 'theme'},
+                    {'data': 'year'},
+                    {'data': 'soLuong'},
+                    {'data': 'price'},
+                    { 'render': function(data, type, row) {
+                        let rowjson = JSON.stringify(row);
+                        return `
+                            <button class='btn btn-outline-primary btn-sm' onclick='clickEdit(${rowjson})' >
+                                <i class="fad fa-edit"></i>    
+                            </button>
+                        `;
+                        },
+                    }
+                ],
+            });
+        } );
+
+        $('#themBtn').on('click', function(e) {
+            //- let maSanPham = $('#inputMaSanPham').val().trim()
+            //- let tenSanPham = $('#inputTenSanPham').val().trim()
+            //- let theme = $('#inputTheme').val().trim()
+            //- let price = $('#inputPrice').val().trim()
+
+            //- if(!maSanPham || !tenSanPham || !theme || !price) {
+            //-     alert('Vui lòng nhập đầy đủ thông tin');
+            //- } else {
+            //-     $.post('/sanpham/themSanPham', {
+            //-         maSanPham, 
+            //-         tenSanPham, 
+            //-         theme, 
+            //-         price
+            //-     },'json').done(function(res){
+            //-         alert('Thêm sản phẩm thành công');
+            //-         $('#ds_legolist').DataTable().ajax.reload();
+            //-     })
+            //- }
+        })
+
+        $('#editBtn').on('click', function(e) {
+            //- let id = $('#inputIdEdit').val().trim()
+            //- let maSanPham = $('#inputMaSanPhamEdit').val().trim()
+            //- let tenSanPham = $('#inputTenSanPhamEdit').val().trim()
+            //- let theme = $('#inputThemeEdit').val().trim()
+            //- let price = $('#inputPriceEdit').val().trim()
+
+            //- if(!maSanPham || !tenSanPham || !theme || !price || !id ) {
+            //-     alert('Vui lòng nhập đầy đủ thông tin');
+            //- } else {
+            //-     $.post('/sanpham/editSanPham', {
+            //-         id,
+            //-         maSanPham, 
+            //-         tenSanPham, 
+            //-         theme, 
+            //-         price
+            //-     },'json').done(function(res){
+            //-         $('#editLegolistModal').modal('hide')
+            //-         res.rowCount == 1 ? alert('Lưu thông tin thành công')  : alert('Lưu thông tin thất bại!!!');
+            //-         $('#ds_legolist').DataTable().ajax.reload();
+            //-     })
+            //- }
+        })
+
+        //- function clickXoa(id) {
+        //-     if(id) {
+        //-         $.post('/sanpham/xoaSanPham', {
+        //-             id
+        //-         },'json').done(function(res){
+        //-             alert('Xóa sản phẩm thành công');
+        //-             $('#ds_legolist').DataTable().ajax.reload();
+        //-         })
+        //-     } else {
+        //-         alert('Không có ID');
+        //-     }
+        //- }
+
+        function clickEdit(row) {
+
+            $('#inputIdEdit').val(row.id.trim());
+            $('#inputMaSanPhamEdit').val(row.maSanPham.trim());
+            $('#inputTenSanPhamEdit').val(row.tenSanPham.trim());
+            $('#inputThemeEdit').val(row.theme.trim());
+            $('#inputPriceEdit').val(row.price.trim());
+
+            // show modal
+            $('#editLegolistModal').modal('show')
+        }
